@@ -1,0 +1,7 @@
+# PostgreSQL recovery configuration file
+# This file was automatically generated and dropped off by chef!
+# Please refer to the PostgreSQL documentation for details on
+# configuration settings.
+
+standby_mode = 'on'
+primary_conninfo = 'host=<%= @host %> port=<%= @port || '5432' %> user=<%= @user || 'repuser' %> password=<%= @password %>'
