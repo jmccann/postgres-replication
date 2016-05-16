@@ -34,7 +34,7 @@ Include `postgres-replication` in your run_list.
 Testing requires [ChefDK](https://downloads.chef.io/chef-dk/) be installed using it's native gems.
 
 ```
-foodcritic -f any -X spec .
+foodcritic -f any -t ~FC016 -X spec .
 rubocop
 rspec --color --format progress
 ```
