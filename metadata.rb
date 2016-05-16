@@ -1,7 +1,7 @@
 name             'postgres-replication'
 maintainer       'Jacob McCann'
 maintainer_email 'jacob.mccann2@target.com'
-license          'all_rights'
+license          'Apache 2.0'
 description      'Installs/Configures postgres-replication'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url       'https://github.com/jmccann/postgres-replication-cookbook'
