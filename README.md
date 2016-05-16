@@ -1,4 +1,5 @@
 # postgres-replication
+[![Build Status](https://travis-ci.org/jmccann/postgres-replication-cookbook.svg?branch=master)](https://travis-ci.org/jmccann/postgres-replication-cookbook)
 
 Use `postgresql` cookbook with additional logic to setup active/passive cluster.
 
