@@ -42,6 +42,10 @@ describe 'postgres-replication::slave' do
       expect(chef_run).to include_recipe 'postgresql::server'
     end
 
+    it 'has postgresql listen on primary IP' do
+      expect(chef_run).to render_file('/etc/postgresql/9.3/main/postgresql.conf').with_content "listen_addresses = '10.0.0.2'"
+    end
+
     it 'deletes password attributes' do
       expect(chef_run).to run_ruby_block "delete all attributes in node['postgresql']['password']"
     end
