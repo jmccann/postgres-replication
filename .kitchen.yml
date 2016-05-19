@@ -44,6 +44,3 @@ suites:
       postgres-replication:
         master:
           ip: 192.168.33.10
-        recovery:
-          config:
-            primary_conninfo: host=192.168.33.10 port=5432 user=repuser password=test
