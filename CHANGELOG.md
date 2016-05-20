@@ -1,3 +1,7 @@
+# 0.2.1
+
+* Fix archiving
+
 # 0.2.0
 
 * Listen on primary IP by default
