@@ -44,6 +44,10 @@ describe 'postgres-replication::master' do
       expect(chef_run).to render_file('/etc/postgresql/9.3/main/postgresql.conf').with_content "listen_addresses = '10.0.0.2'"
     end
 
+    it 'sets postgres password' do
+      expect(chef_run).to run_bash('assign-postgres-password').with(code: "  echo \"ALTER ROLE postgres ENCRYPTED PASSWORD 'anMzQk5GcXtAOENkTFV2Cg==';\" | psql -p 5432\n")
+    end
+
     it 'deletes password attributes' do
       expect(chef_run).to run_ruby_block "delete all attributes in node['postgresql']['password']"
     end
