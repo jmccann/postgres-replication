@@ -17,9 +17,10 @@
 # limitations under the License.
 #
 
+archive_dir = "/var/lib/postgresql/#{node['postgresql']['version']}/main/mnt/server/archivedir"
 node.default['postgresql']['config']['wal_level'] = 'hot_standby'
 node.default['postgresql']['config']['archive_mode'] = 'on'
-node.default['postgresql']['config']['archive_command'] = 'test ! -f /mnt/server/archivedir/%f && cp %p /mnt/server/archivedir/%f'
+node.default['postgresql']['config']['archive_command'] = "test ! -f #{archive_dir}/%f && cp %p #{archive_dir}/%f"
 node.default['postgresql']['config']['max_wal_senders'] = 3
 
 include_recipe 'chef-vault::default'
@@ -35,7 +36,7 @@ postgresql_user 'repuser' do
   password chef_vault_item(node['postgres-replication']['vault'], 'repuser')['repuser']
 end
 
-directory node['postgres-replication']['archive_dir'] do
+directory archive_dir do
   owner 'postgres'
   group 'postgres'
   recursive true

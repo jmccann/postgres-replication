@@ -57,7 +57,7 @@ describe 'postgres-replication::master' do
     end
 
     it 'creates archive directory' do
-      expect(chef_run).to create_directory '/var/lib/postgresql/9.3/mnt/server/archivedir'
+      expect(chef_run).to create_directory '/var/lib/postgresql/9.3/main/mnt/server/archivedir'
     end
   end
 end
