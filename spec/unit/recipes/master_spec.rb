@@ -22,7 +22,7 @@ require 'spec_helper'
 describe 'postgres-replication::master' do
   context 'When all attributes are default, on an unspecified platform' do
     cached(:chef_run) do
-      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '15.10') do |_node, server|
+      runner = ChefSpec::ServerRunner.new(step_into: ['postgresql_user'], platform: 'ubuntu', version: '15.10') do |_node, server|
         inject_databags server
       end
       runner.converge(described_recipe)
@@ -30,6 +30,7 @@ describe 'postgres-replication::master' do
 
     before do
       stub_command('ls /var/lib/postgresql/9.3/main/recovery.conf').and_return(false)
+      stub_command("psql postgres -tAc \"SELECT 1 FROM pg_roles WHERE rolname='repuser'\" | grep -q 1").and_return(false)
     end
 
     it 'converges successfully' do
@@ -58,6 +59,14 @@ describe 'postgres-replication::master' do
 
     it 'creates archive directory' do
       expect(chef_run).to create_directory '/var/lib/postgresql/9.3/main/mnt/server/archivedir'
+    end
+
+    it 'creates postgres user' do
+      expect(chef_run).to run_execute 'create user'
+    end
+
+    it 'updates postgres user password' do
+      expect(chef_run).to_not run_execute 'set password'
     end
   end
 end

@@ -16,3 +16,5 @@ def inject_databags(server)
     end
   end
 end
+
+ChefSpec::Coverage.start!
