@@ -27,7 +27,7 @@ include_recipe 'postgresql::server'
 include_recipe 'postgres-replication::_delete_node_secrets'
 
 execute 'rename original main' do
-  command "mv /var/lib/postgresql/#{node['postgresql']['version']}/main /var/lib/postgresql/9.3/main_old"
+  command "mv /var/lib/postgresql/#{node['postgresql']['version']}/main /var/lib/postgresql/#{node['postgresql']['version']}/main_old"
   creates "/var/lib/postgresql/#{node['postgresql']['version']}/main_old"
 end
 

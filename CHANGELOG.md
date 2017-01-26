@@ -1,3 +1,7 @@
+# 1.0.0
+
+* Version bump dependency on `postgresql` cookbook to `~> 6.0` (from `~> 4.0`)
+
 # 0.2.1
 
 * Fix archiving

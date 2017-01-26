@@ -6,7 +6,7 @@ description      'Installs/Configures postgres-replication'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url       'https://github.com/jmccann/postgres-replication-cookbook'
 issues_url       'https://github.com/jmccann/postgres-replication-cookbook/issues'
-version          '0.2.1'
+version          '1.0.0'
 
 depends 'chef-vault', '~> 1.3'
-depends 'postgresql', '~> 4.0'
+depends 'postgresql', '~> 6.0'
