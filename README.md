@@ -9,6 +9,7 @@ Based on https://cloud.google.com/solutions/setup-postgres-hot-standby
 
 Tested And Validated On
 - Ubuntu 15.10
+- Ubuntu 16.04
 
 ## Usage
 
@@ -28,7 +29,7 @@ Include `postgres-replication` in your run_list.
 
 ## Testing
 
-* Linting - Rubocop and Foodcritic
+* Linting - Cookstyle and Foodcritic
 * Spec - ChefSpec
 * Integration - Test Kitchen
 
@@ -36,7 +37,7 @@ Testing requires [ChefDK](https://downloads.chef.io/chef-dk/) be installed using
 
 ```
 foodcritic -f any -t ~FC016 -X spec .
-rubocop
+cookstyle
 rspec --color --format progress
 ```
 
