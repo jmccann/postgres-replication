@@ -13,6 +13,6 @@ before_script:
   - berks install
 
 script:
-  - rubocop
+  - cookstyle
   - foodcritic -f any -t ~FC016 -X spec .
   - rspec --color --format progress

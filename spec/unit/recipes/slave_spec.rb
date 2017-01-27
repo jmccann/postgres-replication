@@ -22,7 +22,7 @@ require 'spec_helper'
 describe 'postgres-replication::slave' do
   context 'When all attributes are default, on an unspecified platform' do
     cached(:chef_run) do
-      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '15.10') do |node, server|
+      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '16.04') do |node, server|
         node.set['postgres-replication']['master']['ip'] = '10.10.10.5'
         inject_databags server
       end
@@ -30,8 +30,8 @@ describe 'postgres-replication::slave' do
     end
 
     before do
-      stub_command('ls /var/lib/postgresql/9.3/main/recovery.conf').and_return(false)
-      stub_command('[ -d /var/lib/postgresql/9.3/main ]').and_return(false)
+      stub_command('ls /var/lib/postgresql/9.5/main/recovery.conf').and_return(false)
+      stub_command('[ -d /var/lib/postgresql/9.5/main ]').and_return(false)
     end
 
     it 'converges successfully' do
@@ -43,7 +43,7 @@ describe 'postgres-replication::slave' do
     end
 
     it 'has postgresql listen on primary IP' do
-      expect(chef_run).to render_file('/etc/postgresql/9.3/main/postgresql.conf').with_content "listen_addresses = '10.0.0.2'"
+      expect(chef_run).to render_file('/etc/postgresql/9.5/main/postgresql.conf').with_content "listen_addresses = '10.0.0.2'"
     end
 
     it 'deletes password attributes' do
@@ -55,20 +55,20 @@ describe 'postgres-replication::slave' do
     end
 
     it 'performs backup from master' do
-      expect(chef_run).to run_postgresql_backup('from master').with(ip: '10.10.10.5', directory: '/var/lib/postgresql/9.3/main', user: 'repuser', password: 'e2b@vp{wARhcmL9', xlog_method: 'stream')
+      expect(chef_run).to run_postgresql_backup('from master').with(ip: '10.10.10.5', directory: '/var/lib/postgresql/9.5/main', user: 'repuser', password: 'e2b@vp{wARhcmL9', xlog_method: 'stream')
     end
 
     describe 'recovery.conf' do
       it 'creates recovery.conf' do
-        expect(chef_run).to create_template '/var/lib/postgresql/9.3/main/recovery.conf'
+        expect(chef_run).to create_template '/var/lib/postgresql/9.5/main/recovery.conf'
       end
 
       it 'sets standby_mode' do
-        expect(chef_run).to render_file('/var/lib/postgresql/9.3/main/recovery.conf').with_content "standby_mode = 'on'"
+        expect(chef_run).to render_file('/var/lib/postgresql/9.5/main/recovery.conf').with_content "standby_mode = 'on'"
       end
 
       it 'sets primary_conninfo' do
-        expect(chef_run).to render_file('/var/lib/postgresql/9.3/main/recovery.conf').with_content "primary_conninfo = 'host=10.10.10.5 port=5432 user=repuser password=e2b@vp{wARhcmL9'"
+        expect(chef_run).to render_file('/var/lib/postgresql/9.5/main/recovery.conf').with_content "primary_conninfo = 'host=10.10.10.5 port=5432 user=repuser password=e2b@vp{wARhcmL9'"
       end
     end
   end

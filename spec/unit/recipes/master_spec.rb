@@ -22,14 +22,14 @@ require 'spec_helper'
 describe 'postgres-replication::master' do
   context 'When all attributes are default, on an unspecified platform' do
     cached(:chef_run) do
-      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '15.10') do |_node, server|
+      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '16.04') do |_node, server|
         inject_databags server
       end
       runner.converge(described_recipe)
     end
 
     before do
-      stub_command('ls /var/lib/postgresql/9.3/main/recovery.conf').and_return(false)
+      stub_command('ls /var/lib/postgresql/9.5/main/recovery.conf').and_return(false)
     end
 
     it 'converges successfully' do
@@ -41,7 +41,7 @@ describe 'postgres-replication::master' do
     end
 
     it 'has postgresql listen on primary IP' do
-      expect(chef_run).to render_file('/etc/postgresql/9.3/main/postgresql.conf').with_content "listen_addresses = '10.0.0.2'"
+      expect(chef_run).to render_file('/etc/postgresql/9.5/main/postgresql.conf').with_content "listen_addresses = '10.0.0.2'"
     end
 
     it 'sets postgres password' do
@@ -57,7 +57,7 @@ describe 'postgres-replication::master' do
     end
 
     it 'creates archive directory' do
-      expect(chef_run).to create_directory '/var/lib/postgresql/9.3/main/mnt/server/archivedir'
+      expect(chef_run).to create_directory '/var/lib/postgresql/9.5/main/mnt/server/archivedir'
     end
   end
 end
